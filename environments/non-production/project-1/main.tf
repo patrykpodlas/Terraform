@@ -6,7 +6,7 @@ module "kv-ppodlas-example" {
 
 module "kv-secret-env-terra-vcenter-username" {
   source            = "../../../modules/azure-key-vault-secrets"
-  key_vault_name    = module.
+  key_vault_name    = "kv-ppodlas-example"
   key_vault_rg_name = "rg-ppodlas-example"
   secret_name       = "env-terra-vcenter-username"
   secret_value      = "SuperSecretUsername"
