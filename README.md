@@ -1,9 +1,9 @@
 # Introduction
-A simple example of using Terraform with custom modules, using vSphere provider.
+A simple example of using Terraform with custom modules, using vSphere, and Azure providers.
 
 # Requirements
 ## Azure Key Vault
-The variables for all the secrets are retrieves from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
+The variables for all the secrets are retrieved from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
 
 You must provide the Azure Subscription ID and Tenant ID in providers section under modules/`<module-name>`/providers.tf
 ``` hcl
@@ -13,10 +13,18 @@ provider "azurerm" {
   tenant_id       = ""
 }
 ```
-You can set-up the key vault using the azure-key-vault module in modules/azure-key-vault.
-1. Switch directory to `environments/non-production/project-01`
-2. In the `main.tf` file, change the `module name`, `rg_name`, and `key_vault_name`.
-3. Execute
+You can set-up the key vault and the necessary secrets using the azure-key-vault module in `modules/azure-key-vault` and `modules/azure-key-vault-secrets`.
+1. Switch directory to `environments/non-production/project-01`.
+2. In the `main.tf` file, change the:
+
+    `module name`
+
+    `rg_name`
+
+    `key_vault_name`
+
+3. Update all of the `secret_value` variables to match your environment.
+4. Execute.
 
 ``` hcl
 terraform init

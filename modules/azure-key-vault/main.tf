@@ -19,11 +19,17 @@ resource "azurerm_key_vault" "generic-kv" {
     object_id = data.azurerm_client_config.current.object_id
 
     key_permissions = [
-      "Get",
+      "Get"
     ]
 
     secret_permissions = [
       "Get",
+      "List",
+      "Set",
+      "Delete",
+      "Recover",
+      "Backup",
+      "Restore",
     ]
 
     storage_permissions = [
