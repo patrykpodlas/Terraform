@@ -31,7 +31,7 @@ At bare minimum you must edit the modules/`<module-name>`/providers.tf with the 
 # Modules
 A module is a container of code for multiple resources that are used together. Currently the modules are almost the same with slight variations such as the number of disks, CPU's, memory etc.
 ## How to use
-1. Modify the variables in modules/`<module-name>`/providers.tf in each of the module paths.
+1. Modify the variables in modules/`<module-name>`/variables.tf in each of the module paths.
 2. Create folder inside projects directory for your new application or service, name it after the application or service.
 3. Switch to the new directory.
 4. Copy the `template/project-1` contents.
