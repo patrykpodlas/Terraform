@@ -1,5 +1,5 @@
 # Introduction
-A simple example of using Terraform with custom modules.
+A simple example of using Terraform with custom modules, using vSphere provider.
 
 # Requirements
 ## Azure Key Vault
@@ -13,6 +13,21 @@ provider "azurerm" {
   tenant_id       = ""
 }
 ```
+## Variables
+At bare minimum you must edit the modules/`<module-name>`/providers.tf with the detail about your vSphere environment and the vm_ variables:
+
+`default_vsphere_server`
+
+`vsphere_datacenter`
+
+`vsphere_cluster`
+
+`vsphere_datastore`
+
+`vsphere_content_library`
+
+`vsphere_content_library_ovf`
+
 # Modules
 A module is a container of code for multiple resources that are used together. Currently the modules are almost the same with slight variations such as the number of disks, CPU's, memory etc.
 ## How to use
