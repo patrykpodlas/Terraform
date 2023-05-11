@@ -13,6 +13,17 @@ provider "azurerm" {
   tenant_id       = ""
 }
 ```
+You can set-up the key vault using the azure-key-vault module in modules/azure-key-vault.
+1. Switch directory to `environments/non-production/project-01`
+2. In the `main.tf` file, change the `module name`, `rg_name`, and `key_vault_name`.
+3. Execute
+
+``` hcl
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
 ## Variables
 At bare minimum you must edit the modules/`<module-name>`/providers.tf with the detail about your vSphere environment and the vm_ variables:
 
