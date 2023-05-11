@@ -46,8 +46,8 @@ module "kv-secret-env-terra-communicator-username" {
 
 module "kv-secret-env-terra-communicator-password" {
   source            = "../../../modules/azure-key-vault-secrets"
-  key_vault_name    = "kv-ppodlas-example"
-  key_vault_rg_name = "rg-ppodlas-example"
+  key_vault_name    = module.kv-ppodlas-example.key-vault-name
+  key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-communicator-password"
   secret_value      = "SuperSecretPassword"
 }
