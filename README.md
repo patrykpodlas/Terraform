@@ -1,6 +1,54 @@
 # Introduction
 A simple example of using Terraform with custom modules, using vSphere, and Azure providers.
-
+# Directory structure
+```
+├─ .gitignore
+├─ README.md
+├─ environments
+│  ├─ non-production
+│  │  └─ key_vault_for_terraform
+│  │     ├─ .terraform.lock.hcl
+│  │     ├─ main.tf
+│  │     ├─ outputs.tf
+│  │     └─ variables.tf
+│  └─ production
+│     └─ project-1
+│        ├─ .terraform.lock.hcl
+│        ├─ main.tf
+│        ├─ outputs.tf
+│        └─ variables.tf
+├─ modules
+│  ├─ azure-key-vault-secrets
+│  │  ├─ data-sources.tf
+│  │  ├─ main.tf
+│  │  ├─ providers.tf
+│  │  └─ variables.tf
+│  ├─ azure-key-vault
+│  │  ├─ data-sources.tf
+│  │  ├─ main.tf
+│  │  ├─ outputs.tf
+│  │  ├─ providers.tf
+│  │  └─ variables.tf
+│  ├─ default-vm
+│  │  ├─ data-sources.tf
+│  │  ├─ locals.tf
+│  │  ├─ main.tf
+│  │  ├─ outputs.tf
+│  │  ├─ providers.tf
+│  │  └─ variables.tf
+│  └─ sql-vm
+│     ├─ data-sources.tf
+│     ├─ locals.tf
+│     ├─ main.tf
+│     ├─ outputs.tf
+│     ├─ providers.tf
+│     └─ variables.tf
+└─ template
+   └─ project-1
+      ├─ main.tf
+      ├─ outputs.tf
+      └─ variables.tf
+```
 # Requirements
 ## Azure Key Vault
 The variables for all the secrets are retrieved from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
