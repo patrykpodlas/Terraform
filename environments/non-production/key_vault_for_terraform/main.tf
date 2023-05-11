@@ -1,7 +1,7 @@
 module "kv-ppodlas-example" {
   source         = "../../../modules/azure-key-vault"
-  rg_name        = "rg-ppodlas-example"
-  key_vault_name = "kv-ppodlas-example"
+  rg_name        = "rg-ppodlas-example" // Change the value
+  key_vault_name = "kv-ppodlas-example" // Change the value
 }
 
 module "kv-secret-env-terra-vcenter-username" {
@@ -9,7 +9,7 @@ module "kv-secret-env-terra-vcenter-username" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-vcenter-username"
-  secret_value      = "SuperSecretUsername"
+  secret_value      = "SuperSecretUsername" // Change the value
 }
 
 module "kv-secret-env-terra-vcenter-password" {
@@ -17,7 +17,7 @@ module "kv-secret-env-terra-vcenter-password" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-vcenter-password"
-  secret_value      = "SuperSecretPassword"
+  secret_value      = "SuperSecretPassword" // Change the value
 }
 
 module "kv-secret-env-terra-da-username" {
@@ -25,7 +25,7 @@ module "kv-secret-env-terra-da-username" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-da-username"
-  secret_value      = "SuperSecretUsername"
+  secret_value      = "SuperSecretUsername" // Change the value
 }
 
 module "kv-secret-env-terra-da-password" {
@@ -33,7 +33,7 @@ module "kv-secret-env-terra-da-password" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-da-password"
-  secret_value      = "SuperSecretPassword"
+  secret_value      = "SuperSecretPassword" // Change the value
 }
 
 module "kv-secret-env-terra-communicator-username" {
@@ -41,7 +41,7 @@ module "kv-secret-env-terra-communicator-username" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-communicator-username"
-  secret_value      = "SuperSecretUsername"
+  secret_value      = "SuperSecretUsername" // Change the value
 }
 
 module "kv-secret-env-terra-communicator-password" {
@@ -49,5 +49,5 @@ module "kv-secret-env-terra-communicator-password" {
   key_vault_name    = module.kv-ppodlas-example.key-vault-name
   key_vault_rg_name = module.kv-ppodlas-example.rg-name
   secret_name       = "env-terra-communicator-password"
-  secret_value      = "SuperSecretPassword"
+  secret_value      = "SuperSecretPassword" // Change the value
 }
