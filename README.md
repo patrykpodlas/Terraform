@@ -14,7 +14,7 @@ provider "azurerm" {
 }
 ```
 You can set-up the key vault and the necessary secrets using the azure-key-vault module in `modules/azure-key-vault` and `modules/azure-key-vault-secrets`.
-1. Switch directory to `environments/non-production/project-01`.
+1. Switch directory to `environments/non-production/key_vault_for_terraform`.
 2. In the `main.tf` file, change the:
 
     `module name`
