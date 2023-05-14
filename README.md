@@ -49,8 +49,9 @@ A simple example of using Terraform with custom modules, using vSphere, and Azur
       ├─ outputs.tf
       └─ variables.tf
 ```
-# Requirements
-## Azure Key Vault
+# Modules
+## Requirements
+### Azure Key Vault
 The variables for all the secrets are retrieved from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
 
 You must provide the Azure Subscription ID and Tenant ID in providers section under modules/`<module-name>`/providers.tf
@@ -95,7 +96,7 @@ At bare minimum you must edit the modules/`<module-name>`/providers.tf with the 
 
 `vsphere_content_library_ovf`
 
-# Modules
+## Modules
 A module is a container of code for multiple resources that are used together. Currently the modules are almost the same with slight variations such as the number of disks, CPU's, memory etc.
 ## How to use
 1. Modify the variables in modules/`<module-name>`/variables.tf in each of the module paths.
@@ -127,6 +128,16 @@ module "vm-001-p-p" {
 }
 ```
 6. Execute
+``` hcl
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+# Azure VM Image Builder
+This module builds an entire Azure VM Image Builder environment.
+## How to use
+1. For simplicity, switch directory to `./environments/non-production/vm-image-builder`.
+2. Execute
 ``` hcl
 terraform init
 terraform plan
