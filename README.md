@@ -6,11 +6,22 @@ A simple example of using Terraform with custom modules, using vSphere, and Azur
 ├─ README.md
 ├─ environments
 │  ├─ non-production
-│  │  └─ key_vault_for_terraform
+│  │  ├─ azure_ad_users
+│  │  │  ├─ .terraform.lock.hcl
+│  │  │  └─ main.tf
+│  │  ├─ key_vault_for_terraform
+│  │  │  ├─ .terraform.lock.hcl
+│  │  │  ├─ main.tf
+│  │  │  ├─ outputs.tf
+│  │  │  └─ variables.tf
+│  │  ├─ test-vm
+│  │  │  ├─ .terraform.lock.hcl
+│  │  │  ├─ main.tf
+│  │  │  ├─ outputs.tf
+│  │  │  └─ variables.tf
+│  │  └─ vm-image-builder
 │  │     ├─ .terraform.lock.hcl
-│  │     ├─ main.tf
-│  │     ├─ outputs.tf
-│  │     └─ variables.tf
+│  │     └─ main.tf
 │  └─ production
 │     └─ project-1
 │        ├─ .terraform.lock.hcl
@@ -18,6 +29,11 @@ A simple example of using Terraform with custom modules, using vSphere, and Azur
 │        ├─ outputs.tf
 │        └─ variables.tf
 ├─ modules
+│  ├─ azure-ad-users
+│  │  ├─ main.tf
+│  │  ├─ outputs.tf
+│  │  ├─ providers.tf
+│  │  └─ variables.tf
 │  ├─ azure-key-vault-secrets
 │  │  ├─ data-sources.tf
 │  │  ├─ main.tf
@@ -27,6 +43,11 @@ A simple example of using Terraform with custom modules, using vSphere, and Azur
 │  │  ├─ data-sources.tf
 │  │  ├─ main.tf
 │  │  ├─ outputs.tf
+│  │  ├─ providers.tf
+│  │  └─ variables.tf
+│  ├─ azure-vm-image-builder
+│  │  ├─ data-sources.tf
+│  │  ├─ main.tf
 │  │  ├─ providers.tf
 │  │  └─ variables.tf
 │  ├─ default-vm
@@ -44,14 +65,32 @@ A simple example of using Terraform with custom modules, using vSphere, and Azur
 │     ├─ providers.tf
 │     └─ variables.tf
 └─ template
+   ├─ module
+   │  ├─ main.tf
+   │  ├─ outputs.tf
+   │  ├─ providers.tf
+   │  └─ variables.tf
    └─ project-1
       ├─ main.tf
       ├─ outputs.tf
       └─ variables.tf
 ```
 # Modules
-## Requirements
-### Azure Key Vault
+A module is a container of Terraform code for single or multiple resources grouped together, used as means to prevent code duplication in projects.
+
+Sourcing the module is as simple as:
+``` hcl
+module "<to-be-deployed-resource-name>" {
+    source = "<path-to-the-module>"
+    parameter1 = value1
+    parameter2 = value2
+}
+```
+
+In this case, the so called root module is the above, whilst the child module, is the module being sourced.
+## default-vm / sql-vm
+### Requirements
+#### `Azure Key Vault`
 The variables for all the secrets are retrieved from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
 
 You must provide the Azure Subscription ID and Tenant ID in providers section under modules/`<module-name>`/providers.tf
@@ -80,8 +119,7 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
-
-## Variables
+#### `Variables`
 At bare minimum you must edit the modules/`<module-name>`/providers.tf with the detail about your vSphere environment and the vm_ variables:
 
 `default_vsphere_server`
@@ -96,9 +134,7 @@ At bare minimum you must edit the modules/`<module-name>`/providers.tf with the 
 
 `vsphere_content_library_ovf`
 
-## Modules
-A module is a container of code for multiple resources that are used together. Currently the modules are almost the same with slight variations such as the number of disks, CPU's, memory etc.
-## How to use
+### How to use
 1. Modify the variables in modules/`<module-name>`/variables.tf in each of the module paths.
 2. Create folder inside projects directory for your new application or service, name it after the application or service.
 3. Switch to the new directory.
@@ -133,9 +169,11 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
-# Azure VM Image Builder
+## Azure VM Image Builder
 This module builds an entire Azure VM Image Builder environment.
-## How to use
+### Requirements
+Azure subscription.
+### How to use
 1. For simplicity, switch directory to `./environments/non-production/vm-image-builder`.
 2. Execute
 ``` hcl
