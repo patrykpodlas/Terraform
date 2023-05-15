@@ -19,7 +19,7 @@ resource "azurerm_resource_group" "staging_resource_group" {
 resource "azurerm_shared_image_gallery" "compute_gallery" {
   name                = var.GalleryName
   resource_group_name = azurerm_resource_group.image_resource_group.name
-  location            = var.Location
+  location            = azurerm_resource_group.image_resource_group.location
 }
 
 # Create the Azure Compute Gallery image definition
@@ -27,7 +27,7 @@ resource "azurerm_shared_image" "compute_gallery_image" {
   name                = var.ImageDefinitionName
   gallery_name        = azurerm_shared_image_gallery.compute_gallery.name
   resource_group_name = azurerm_resource_group.image_resource_group.name
-  location            = var.Location
+  location            = azurerm_resource_group.image_resource_group.location
   specialized         = "false"
   os_type             = "Windows"
   hyper_v_generation  = var.VMGeneration
@@ -38,11 +38,27 @@ resource "azurerm_shared_image" "compute_gallery_image" {
   }
 }
 
+# Create the virtual network
+resource "azurerm_virtual_network" "vnet" {
+  name                = var.vNETName
+  resource_group_name = azurerm_resource_group.vnet_resource_group.name
+  location            = var.Location
+  address_space       = ["10.0.0.0/16"]
+}
+
+# Create the subnet within the virtual network
+resource "azurerm_subnet" "subnet" {
+  name                 = var.SubnetName
+  resource_group_name  = azurerm_resource_group.vnet_resource_group.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
 # Create the network security group with a security rule
 resource "azurerm_network_security_group" "nsg" {
   name                = var.NSGName
-  resource_group_name = var.vNetResourceGroup
-  location            = var.Location
+  resource_group_name = azurerm_resource_group.vnet_resource_group.name
+  location            = azurerm_resource_group.vnet_resource_group.location
   security_rule {
     name                       = "AzureImageBuilderAccess"
     description                = "Allow Image Builder Private Link Access to Proxy VM"
@@ -55,22 +71,6 @@ resource "azurerm_network_security_group" "nsg" {
     source_address_prefix      = "AzureLoadBalancer"
     destination_address_prefix = "VirtualNetwork"
   }
-}
-
-# Create the virtual network
-resource "azurerm_virtual_network" "vnet" {
-  name                = var.vNETName
-  resource_group_name = var.vNetResourceGroup
-  location            = var.Location
-  address_space       = ["10.0.0.0/16"]
-}
-
-# Create the subnet within the virtual network
-resource "azurerm_subnet" "subnet" {
-  name                 = var.SubnetName
-  resource_group_name  = var.vNetResourceGroup
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
 }
 
 resource "azurerm_subnet_network_security_group_association" "associate" {
