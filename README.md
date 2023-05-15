@@ -90,7 +90,7 @@ module "<to-be-deployed-resource-name>" {
 In this case, the so called root module is the above, whilst the child module, is the module being sourced.
 ## default-vm / sql-vm
 ### Requirements
-#### `Azure Key Vault`
+#### Azure Key Vault
 The variables for all the secrets are retrieved from Azure Key Vault using the azure-rm provider. Name of the secrets are in modules/`<module-name>`/variables.tf, you can remove them and remove the data sources if you wish to use plain text format, however creating a key vault and secrets is free.
 
 You must provide the Azure Subscription ID and Tenant ID in providers section under modules/`<module-name>`/providers.tf
@@ -119,7 +119,7 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
-#### `Variables`
+#### Variables
 At bare minimum you must edit the modules/`<module-name>`/providers.tf with the detail about your vSphere environment and the vm_ variables:
 
 `default_vsphere_server`
