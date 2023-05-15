@@ -28,9 +28,10 @@ resource "azurerm_shared_image" "compute_gallery_image" {
   gallery_name        = azurerm_shared_image_gallery.compute_gallery.name
   resource_group_name = azurerm_resource_group.image_resource_group.name
   location            = azurerm_resource_group.image_resource_group.location
+  hyper_v_generation  = var.VMGeneration
   specialized         = "false"
   os_type             = "Windows"
-  hyper_v_generation  = var.VMGeneration
+
   identifier {
     publisher = var.CompanyName
     offer     = "windows_11_gen2"
