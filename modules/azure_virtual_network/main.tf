@@ -12,14 +12,14 @@ resource "azurerm_network_security_group" "network_security_group" {
 
 resource "azurerm_virtual_network" "virtual_network" {
   name                = var.virtual_network_name
-  resource_group_name = azurerm_network_security_group.network_security_group.name
+  resource_group_name = azurerm_network_security_group.network_security_group.resource_group_name
   location            = azurerm_network_security_group.network_security_group.location
-  address_space       = ["10.0.0.0/16"]
-  dns_servers         = ["10.0.0.4", "10.0.0.5"]
+  address_space       = var.address_space
+  dns_servers         = var.dns_servers
 
   subnet {
     name           = var.subnet_name
-    address_prefix = "10.0.1.0/24"
+    address_prefix = var.address_prefix
     security_group = azurerm_network_security_group.network_security_group.id
   }
 
