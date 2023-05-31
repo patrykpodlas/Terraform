@@ -13,4 +13,5 @@ variable "resource_group_location" {
     error_message = "Only the UK South region is supported."
 
   }
+  default = "UK South"
 }
