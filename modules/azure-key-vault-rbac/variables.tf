@@ -1,11 +1,11 @@
-variable "rg_name" {
+variable "resource_group_name" {
   default = ""
   type    = string
 }
 
-variable "rg_location" {
+variable "resource_group_location" {
   default = ""
-  type = string
+  type    = string
 }
 
 variable "key_vault_name" {
