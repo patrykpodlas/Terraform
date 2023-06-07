@@ -46,3 +46,4 @@ terraform.rc
 
 # MacOS
 .DS_Store
+**/environments/production/**
